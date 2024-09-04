@@ -1,0 +1,30 @@
+<%= stylesheet_link_tag 'new', :media => "all" %>
+
+<div class="post-container">
+  <p class="title">投稿フォーム</p>
+  <%= form_for @tweet do |f| %>
+    <div class="field">
+      <%= f.label :投稿内容 %>
+      <br>
+      <%= f.text_field :body, :size => 140 %>
+      <br>
+    </div>
+    <div class="field">
+      <%= f.label :photo %>
+      <%= f.file_field :photo %>
+    </div>
+    <div class="form_group">
+      <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name ) do |tag| %>
+        <div class="form-check">
+          <%= tag.label class: 'form-check-label' do %>
+            <%= tag.check_box class: 'form-check-input' %>
+            <%= tag.text %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <%= f.submit "送信" %>
+    <br>
+  <% end %>
+</div>
+<%= link_to "Tweet一覧に戻る", tweets_path %>
