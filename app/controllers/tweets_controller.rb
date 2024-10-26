@@ -13,11 +13,20 @@ class TweetsController < ApplicationController
         end
       end
     end
+
+    if params[:latest].present?
+      @tweets = @tweets.order('created_at DESC')
+    elsif params[:likes_count].present?
+      @tweets = @tweets.sort {|a,b| b.liked_users.count <=> a.liked_users.count}
+    end
+    
     @tweets = Kaminari.paginate_array(@tweets).page(params[:page]).per(3)
     
     if params[:tag]
       Tag.create(name: params[:tag])
     end
+
+
   end
 
   def new
@@ -61,7 +70,7 @@ class TweetsController < ApplicationController
 
   private
   def tweet_params
-    params.require(:tweet).permit(:body, :photo, tag_ids: [])
+    params.require(:tweet).permit(:body, :photo, :youtube_url, tag_ids: [])
   end
 
 end

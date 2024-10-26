@@ -3,6 +3,12 @@
     <%= f.label :body %>
     <%= f.text_field :body, :size => 140 %>
   </div>
+
+  <div class="field">
+      <%= f.label :youtube_url %><br>
+      <%= f.text_field :youtube_url, :size => 140 %>
+  </div>
+
   <div class="form_group">
     <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name ) do |tag| %>
       <div class="form-check">
